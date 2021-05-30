@@ -1,11 +1,13 @@
 classdef CPLR
-    %% Implements a Canonical Peicewise Linear Representation (CPLR) of a function
-    % obj = CPLR(N,Y,X) creates an CPLR object, where
-    %     N - No. of Dimensions
-    %     Y - Data to be fitted, N-Dimensional Array
-    %     X - cell array of size N, i-th element contains vector x_i along
-    %         which data is given.
-    %--------------------------------------------------------------------------
+%% Implements a Canonical Peicewise Linear Representation (CPLR) of a function
+% obj = CPLR(N,Y,X) creates an CPLR object, where
+%     N - No. of Dimensions
+%     Y - Data to be fitted, N-Dimensional Array
+%     X - cell array of size N, i-th element contains vector x_i along
+%         which data is given.
+% 
+% by Hafiz Zeeshan Iqbal Khan
+%--------------------------------------------------------------------------
     properties (Access = public)
         N      % No of Dimensions
         nSize  % Size along each dimension
