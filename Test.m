@@ -1,14 +1,20 @@
-clc; clear;
-clearvars; clc;
+%clc; 
+clear;
+clearvars;
+rng(0)
 %% Data for Fitting & Testing
 figure(1),clf
 tic
+nOut = 3;
 for N = 1:10;
 nSize = round(abs(rand(1,N))*2 + 3);
-if N > 1
-    OUT = rand(nSize);
-else
-    OUT = rand(nSize,1);
+clear OUT
+for kk=1:nOut
+    if N > 1
+        OUT{kk} = rand(nSize);
+    else
+        OUT{kk} = rand(nSize,1);
+    end
 end
 for k = 1:N
     n    = nSize(k);
@@ -26,10 +32,13 @@ for k = 1:N
 end
 XQ = mat2cell(Xq,nq,ones(1,N));
 [GRID{1:numel(X)}] = ndgrid(X{:});
-out = interpn(GRID{:},OUT,XQ{:});
+clear out
+for kk=1:nOut
+    out(:,kk) = interpn(GRID{:},OUT{kk},XQ{:});
+end
 %%
-obj = CPLR(N,OUT,X);
-cplr = obj.eval(Xq');
+obj = NPLR(N,X,OUT);
+cplr = obj.eval(Xq);
 RMSE(N) = sqrt(mean((out(:)-cplr(:)).^2))/sqrt(mean(out(:).^2));
 disp(['RMSE = ' num2str(RMSE(N)) ' for N = ' num2str(N) '  in ' num2str(toc) ' (sec)'])
 tic
